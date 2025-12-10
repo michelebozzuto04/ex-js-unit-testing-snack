@@ -2,10 +2,6 @@ function getInitials(name) {
     return name.charAt(0);
 }
 
-function createSlug1(string) {
-    return string.split(' ').join('').toLowerCase();
-}
-
 function average(numArray) {
     const somma = numArray.reduce(
         (acc, currentValue) => acc + currentValue,
@@ -14,8 +10,27 @@ function average(numArray) {
     return somma / numArray.length
 }
 
-function createSlug2(stringa) {
+function isPalindrome(stringa) {
+    let isPal;
+    for (let i = 0; i < stringa.length; i++) {
+        if (stringa.toLowerCase().charAt(i) === stringa.toLowerCase().charAt(stringa.length - 1 - i)) {
+            isPal = true;
+        } else {
+            isPal = false;
+            break;
+        }
+    }
+    return isPal;
+}
+
+function createSlug(stringa) {
+    if (stringa.length < 1 || !stringa.trim(' ')) {
+        throw new Error('La stringa deve avere almeno un carattere.');
+    }
+    if (typeof stringa !== 'string') {
+        throw new Error('Nessuna stringa fornita.');
+    }
     return stringa.split(' ').join('-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
-module.exports = { getInitials, createSlug1, average, createSlug2 }
+module.exports = { getInitials, createSlug, average, isPalindrome }
