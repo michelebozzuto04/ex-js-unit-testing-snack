@@ -33,4 +33,17 @@ function createSlug(stringa) {
     return stringa.split(' ').join('-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
-module.exports = { getInitials, createSlug, average, isPalindrome }
+function findPostById(posts, id) {
+    return posts.find(p => p.id === id);
+}
+
+function addPost(posts, newPost) {
+    return posts.push(newPost);
+}
+
+function removePost(posts, id) {
+    const post = posts.find(p => p.id === id);
+    return posts.splice(posts.indexOf(post), 1);
+}
+
+module.exports = { getInitials, createSlug, average, isPalindrome, findPostById, addPost, removePost }
