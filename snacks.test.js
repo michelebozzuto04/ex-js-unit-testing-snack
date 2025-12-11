@@ -92,3 +92,13 @@ test("Dopo aver rimosso un post con la funzione removePost, l'array posts deve c
 });
 
 // Snack 9 (Bonus)
+test('Se si tenta di aggiungere un post con un id o uno slug già esistente, la funzione addPost deve lanciare un errore.', () => {
+    expect(() => addPost(posts, { id: 4, title: 'Terzo post', slug: 'terzo-post' })).toThrow();
+    expect(() => addPost(posts, { id: 2, title: 'Quarto post', slug: 'quarto-post' })).toThrow();
+});
+
+// Snack 10 (Bonus)
+test('Se viene passato un array di post come secondo argomento, la funzione createSlug incrementa di 1 se lo slug esiste già.', () => {
+    expect(createSlug('Terzo post', posts)).toBe('terzo-post-1');
+    expect(createSlug('Primo post', posts)).toBe('primo-post-1');
+});

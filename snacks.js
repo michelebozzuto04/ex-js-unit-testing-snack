@@ -23,14 +23,29 @@ function isPalindrome(stringa) {
     return isPal;
 }
 
-function createSlug(stringa) {
+function createSlug(stringa, posts) {
+    // Gestione degli errori
     if (stringa.length < 1 || !stringa.trim(' ')) {
         throw new Error('La stringa deve avere almeno un carattere.');
     }
     if (typeof stringa !== 'string') {
         throw new Error('Nessuna stringa fornita.');
     }
-    return stringa.split(' ').join('-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    // Creazione dello slug
+    const newSlug = stringa.split(' ').join('-').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const incrementSlug = (slug) => {
+        return slug + '-1'
+    }
+
+    // Controllo sull'array di post
+    if (posts) {
+        const isSlugUsed = posts.some(p => p.slug === newSlug);
+        if (isSlugUsed) {
+            return incrementSlug(newSlug)
+        }
+    }
+    return newSlug;
 }
 
 function findPostById(posts, id) {
@@ -38,6 +53,14 @@ function findPostById(posts, id) {
 }
 
 function addPost(posts, newPost) {
+    const isIdUsed = posts.some(p => p.id === newPost.id);
+    const isSlugUsed = posts.some(p => p.slug === newPost.slug);
+    if (isIdUsed) {
+        throw Error('Id già esistente')
+    }
+    if (isSlugUsed) {
+        throw Error('Slug già esistente')
+    }
     return posts.push(newPost);
 }
 
